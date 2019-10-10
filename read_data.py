@@ -139,4 +139,90 @@ def vector_angle_relative(df):
 	df['theta'] = temp_theta
 	return df
 	
-			
+
+"""
+
+#Function name : rate_of_change_angle
+#Author : 
+#Function description : Calculate and add 'rate of change of angles' to Data Frame 
+#Input parameters : 
+	1. Pandas Dataframe with headers -
+	Frame 	Time 	X.1 	Z.1 	vector 		theta
+#Return : 
+	1. Dataframe with headers - 
+	Frame 	Time 	X.1 	Z.1 	vector 		theta 		rate 
+#Pre-condition : 
+	1. data frame has valid value 
+"""
+
+def rate_of_change_angle(df):
+	#create column of vector angle change rate - 6th column 
+	temp_rate = list()
+	for row in range(0, len(df) - 1, 1):
+		#dT = T2 - T1
+		denom = (float(df.iloc[row + 1, 1]) - float(df.iloc[row, 1]))
+		if denom != 0 :
+			#rate = (theta2 - theta1) / dT
+			angle_rate = (float(df.iloc[row + 1, 5]) - float(df.iloc[row, 5])) / denom
+			#add value of rate 
+			temp_rate.append(angle_rate)
+		else: 
+			# add nan
+			temp_rate.append(np.nan)
+
+	#pad array to match length of dataframe 
+	for pad in range(len(temp_rate), len(df)):
+		temp_rate.append(np.nan)
+
+
+	#add newly calculated 'rate of angle change' list to datafram under header 'rate' - 6th column 
+	df['rate'] = temp_rate
+	df.dropna()	# discard all rows with nan 
+	return df
+
+"""
+
+#Function name : calculate_distance 
+#Author : 
+#Function description : Calculate and add 'distance between consective points' to Data Frame 
+#Input Parameters : 
+	1. Pandas Dataframe with headers - 
+	Frame 	Time 	X.1 	Z.1 	vector 		theta 		rate 
+#Return : 
+	1. 	Dataframe with headers - 
+	Frame 	Time 	X.1 	Z.1 	vector 		theta 		rate 		distance 
+#Pre-condition : 
+	1. Dataframe has valid value 
+"""
+
+def calculate_distance(df):
+	temp_distance = list()
+	for row in range(0 ,len(df) - 1): #for all rows in dataframe 
+		x21 = df.iloc[row + 1, 2] - df.iloc[row, 2] #difference between x coordinates of the two points 
+		z21 = df.iloc[row + 1, 3] - df.iloc[row, 3]	#difference between z coordinates of the two points 
+		distance = math.sqrt(math.pow(z21, 2) + math.pow(z21, 2))	# segment length between two points 
+		temp_distance.append(distance) # add to list
+
+	#pad array to match length of dataframe 
+	for pad in range(len(temp_distance), len(df)):
+		temp_distance.append(np.nan)
+
+	# add newly calculated 'segment length' list to dataframe under header 'distance' - 7th column 
+	df['distance'] = temp_distance
+	return df 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	pass
