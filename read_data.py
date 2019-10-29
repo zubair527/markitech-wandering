@@ -42,4 +42,47 @@ def read_header_from_CSV(filepath):
 	return parameters
 
 
+"""
+
+#Function anme : read_data_from_CSV
+#Author : 
+#Function description : Extract sequence of time and location data from .CSV data file to a dictionary
+#Input Parameters : 
+	1. Data filepath 
+#Return : 
+	1. Dataframe consisting movement data 
+#Pre-Condition : 
+	1. filepath is valid 
+
+Sample extracted header of data file: 
+	Frame, Time, X.1, Z.1
+Sameple rows of data file
+	0, 0.000000, - 2.041308, 1.913831
+	1, 0.003344, - 2.042123, 1.929382
+"""
+
+def read.read_data_from_CSV(filepath)
+	#column numbers to extract 
+	cols = [0, 1, 6, 8]
+	#read csv 
+	#comma(,) delimited
+	#read only selected columns (0=Frame, 1=Time, 6=X.1, 8=Z.1)
+	#header is at row 6, do not read previous rows (0-5)
+	#Do not skip blank lines while reading 
+	#Drop rows with NA values
+	df = pd.read_csv(filepath, sep = ',', usecols = cols, header = 6, skip_blank_lines=False).dropna()
+	return df
+
+
+
+
+
+
+
+
+
+
+
+
+
 
