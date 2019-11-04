@@ -32,7 +32,7 @@ Sample session info row :
 
 def read_header_from_CSV(filepath):
 	#read first row of data (session info row)
-	df = pd.read_csv(filepath, sep=',', nrows = 1, header = None).dropna()
+	df = pd.read_csv(filepath, sep=',', nrows=1, header=None).dropna()
 	# Get number of columns (parameters and parameter value)
 	no_of_columns = df.shape[1]
 	#extract session variables and corresponding value to dictionary 
@@ -61,8 +61,8 @@ Sameple rows of data file
 	1, 0.003344, - 2.042123, 1.929382
 """
 
-def read.read_data_from_CSV(filepath)
-	#column numbers to extract 
+def read_data_from_CSV(filepath):
+	#column numbers to extract
 	cols = [0, 1, 6, 8]
 	#read csv 
 	#comma(,) delimited
@@ -70,14 +70,8 @@ def read.read_data_from_CSV(filepath)
 	#header is at row 6, do not read previous rows (0-5)
 	#Do not skip blank lines while reading 
 	#Drop rows with NA values
-	df = pd.read_csv(filepath, sep = ',', usecols = cols, header = 6, skip_blank_lines=False).dropna()
+	df = pd.read_csv(filepath, sep=',', usecols=cols, header=6, skip_blank_lines=False).dropna()
 	return df
-
-
-
-
-
-
 
 
 
