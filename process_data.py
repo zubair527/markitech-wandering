@@ -1,4 +1,4 @@
-import pandas pas pd 
+import pandas as pd
 import matplotlib.pyplot as plt 
 import numpy as np
 import math
@@ -24,11 +24,11 @@ Sample rows of input data frame
 
 def preprocess(df):
 	#Average rolling window of 500 data points 
-	df = df.rolling(window = 500).mean().dropna()
+	df = df.rolling(window=100).mean().dropna()
 	#Add index column : date time derived from time-stamp
-	df.index = pd.to_datetime(df.index, unit = 's')
+	df.index = pd.to_datetime(df.index, unit ='s')
 	# resample data
-	r = df.resample(rule = '60S')
+	r = df.resample(rule ='60S')
 	df = r.mean()
 	return df
 
@@ -121,7 +121,7 @@ def vector_angle_relative(df):
 		# cos(theta) = dot_product(u, v) / length(u) / length(v); u and v are vectors
 		cos_theta = np.dot(df.iloc[row, 4], df.iloc[row + 1, 4]) / np.linalg.norm(df.iloc[row, 4]) / np.linalg.norm(df.iloc[row + 1, 4])
 		#if cos(theta) is in valid range 
-		if cos_theta <= and cos_theta >= -1.0:
+		if cos_theta <= 1 and cos_theta >= -1.0:
 			#theta = acos(.);
 			theta = math.degrees(math.acos(cos_theta))
 			#add value of theta

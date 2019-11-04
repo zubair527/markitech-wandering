@@ -1,3 +1,5 @@
+import process_data
+import read_data
 """
 
 #Function name : algo_1
@@ -14,8 +16,15 @@ Wandering trace count
 
 """
 
-def algo_1(df):
-	has_sharp = False # variable to keep track of sharp point encounter 
+def algo_1():
+	df = read_data.read_data_from_CSV('wandering_data.csv')
+	df = process_data.preprocess(df)
+	df = process_data.vector_angle_global(df)
+	df = process_data.vector_angle_relative(df)
+	df = process_data.rate_of_change_angle(df)
+	df = process_data.calculate_distance(df)
+
+	has_sharp = False # variable to keep track of sharp point encounter
 	segments = 0 #variable to keep track of segments between sharp points 
 	wandering = 0 # variable to keep track of wandering trace 
 
@@ -29,10 +38,12 @@ def algo_1(df):
 				distance = df.iloc[row1:row2, 7].sum() #sum of segment lengths between the last two sharp points 
 				if distance < 10 : #if segment length smaller than threshold 
 					segments += 1 # add to segment count 
-					if segments == 4 : # if segment count is equal or more than 4 
-					wandering += 1 # add to wandering trace count 
+					if segments == 4: # if segment count is equal or more than 4
+						wandering +=1 # add to wandering trace count
 				else: 
 					segments = 0 # re-initialize segment count to 0
 				row1 = row2 #set previous sharp point by current sharp point 
-	return wandering # return wandering trace counts 
+	return wandering # return wandering trace counts
 
+
+print('Wander Prediction for this data: ' +str(algo_1()))
